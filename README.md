@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Contentful Events App
+
+A modern events web application built with [Next.js](https://nextjs.org) and powered by [Contentful](https://www.contentful.com/). This app displays events and organizer profiles, using reusable UI components and efficient data fetching from Contentful.
+
+## Features
+
+- Event listing and single event pages
+- Organizer profile pages
+- Contentful CMS integration for events and organizers
+- Reusable UI components: Button, Link, Typography, Image, RichTextRenderer, Skeletons
+- TypeScript for type safety
+- Modular and scalable project structure
 
 ## Getting Started
 
-First, run the development server:
+### 1. Install dependencies
+
+```bash
+npm install
+# or
+yarn install
+```
+
+### 2. Set up Contentful
+
+1. Create a Contentful account and space.
+2. Add your Contentful API keys and space ID to your environment variables (e.g., `.env.local`).
+3. Structure your Contentful content models for events and organizers as expected by the app (see `src/app/types/events.ts`).
+
+### 3. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `src/app/components/` – Reusable UI components (Button, Link, Typography, Image, RichTextRenderer, Skeletons, EventCard)
+- `src/app/event/[slug]/page.tsx` – Single event page
+- `src/app/organizer/[organizerId]/page.tsx` – Organizer profile page
+- `src/app/queries/` – GraphQL queries for Contentful
+- `src/app/lib/` – Contentful API helpers and utility functions
+- `src/app/types/` – TypeScript types for events and organizers
+- `src/app/providers.tsx` – App-wide providers
 
-## Learn More
+## Contentful Integration
 
-To learn more about Next.js, take a look at the following resources:
+- All event and organizer data is fetched from Contentful using GraphQL queries.
+- Update your Contentful space to match the expected data structure for seamless integration.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Contributing
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+[MIT](LICENSE)
