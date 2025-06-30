@@ -1,7 +1,6 @@
 import React from "react";
 import { Image } from "./Image";
 import { Typography } from "./Typography/Typography";
-import { Button } from "./Button/Button";
 import { Link } from "./Link/Link";
 import { formatEventDateTime } from "../lib/helpers";
 
@@ -29,7 +28,6 @@ export const EventCard: React.FC<EventCardProps> = ({
   startDate,
   endDate,
 }) => {
-
   return (
     <div className="bg-[#18181b] rounded-lg shadow-lg overflow-hidden max-w-sm w-full border border-gray-700">
       <Image src={coverImage?.url} alt={coverImage?.title} format="banner" />

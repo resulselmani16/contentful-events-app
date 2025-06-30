@@ -3,7 +3,7 @@ const token = process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN;
 
 export const graphqlFetcher = async (
   query: string,
-  variables?: Record<string, any>
+  variables?: Record<string, unknown>
 ) => {
   if (!CONTENTFUL_ENDPOINT) {
     throw new Error("CONTENTFUL_GRAPHQL_ENDPOINT is not defined");

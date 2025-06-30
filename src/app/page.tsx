@@ -6,6 +6,16 @@ import { graphqlFetcher } from "./lib/contentful";
 import { EVENTS_QUERY } from "./queries/events";
 import { Typography } from "./components/Typography/Typography";
 
+type EventApiType = {
+  sys?: { id?: string };
+  coverImage: { title: string; url: string };
+  title: string;
+  organizer?: { name?: string; email?: string };
+  slug?: string;
+  startDate?: string | Date;
+  endDate?: string | Date;
+};
+
 export default function Home() {
   const { data, isLoading, error } = useQuery({
     queryKey: ["events"],
@@ -22,19 +32,22 @@ export default function Home() {
       {isLoading ? (
         <EventListSkeleton />
       ) : (
-        events.map((event: any, idx: number) => (
-          <EventCard
-            key={event.sys?.id || idx}
-            coverImage={event.coverImage}
-            title={event.title || ""}
-            organizerName={event.organizer.name || ""}
-            organizerEmail={event.organizer.email || ""}
-            ctaText={"Read more"}
-            ctaHref={`event/${event.slug.trim()}` || ""}
-            startDate={event.startDate || ""}
-            endDate={event.endDate || ""}
-          />
-        ))
+        events.map((event: Record<string, unknown>, idx: number) => {
+          const e = event as unknown as EventApiType;
+          return (
+            <EventCard
+              key={e.sys?.id || idx}
+              coverImage={e.coverImage}
+              title={e.title || ""}
+              organizerName={e.organizer?.name || ""}
+              organizerEmail={e.organizer?.email || ""}
+              ctaText={"Read more"}
+              ctaHref={`event/${e.slug?.trim()}` || ""}
+              startDate={e.startDate || ""}
+              endDate={e.endDate || ""}
+            />
+          );
+        })
       )}
       {error && (
         <div className="flex items-center justify-center">

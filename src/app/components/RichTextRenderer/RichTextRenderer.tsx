@@ -8,24 +8,39 @@ import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
 const RichTextRenderer = ({ document, links }: RichTextRendererProps) => {
   const options = {
     renderNode: {
-      [BLOCKS.HEADING_1]: (node: any, children: any): React.ReactNode => {
+      [BLOCKS.HEADING_1]: (
+        node: unknown,
+        children: React.ReactNode
+      ): React.ReactNode => {
         return <Typography as="h1">{children}</Typography>;
       },
-      [BLOCKS.HEADING_2]: (node: any, children: any): React.ReactNode => {
+      [BLOCKS.HEADING_2]: (
+        node: unknown,
+        children: React.ReactNode
+      ): React.ReactNode => {
         return <Typography as="h2">{children}</Typography>;
       },
-      [BLOCKS.PARAGRAPH]: (node: any, children: any): React.ReactNode => {
+      [BLOCKS.PARAGRAPH]: (
+        node: unknown,
+        children: React.ReactNode
+      ): React.ReactNode => {
         return <Typography as="p">{children}</Typography>;
       },
-      [BLOCKS.LIST_ITEM]: (content: any): React.ReactNode => {
-        return (
-          <li className="list-disc m-4 text-lg md:text-xl">
-            {content.content[0].content[0].value}
-          </li>
-        );
+      [BLOCKS.LIST_ITEM]: (content: unknown): React.ReactNode => {
+        const c = content as { content?: unknown[] };
+        const first = c.content && (c.content[0] as { content?: unknown[] });
+        const value =
+          first &&
+          Array.isArray(first.content) &&
+          first.content[0] &&
+          (first.content[0] as { value?: string }).value
+            ? (first.content[0] as { value?: string }).value
+            : null;
+        return <li className="list-disc m-4 text-lg md:text-xl">{value}</li>;
       },
-      [BLOCKS.EMBEDDED_ASSET]: (node: any): React.ReactNode => {
-        const id = node.data?.target?.sys?.id ?? 0;
+      [BLOCKS.EMBEDDED_ASSET]: (node: unknown): React.ReactNode => {
+        const n = node as { data?: { target?: { sys?: { id?: string } } } };
+        const id = n.data?.target?.sys?.id ?? 0;
         const result = links?.assets.block.find((asset) => asset.sys.id === id);
 
         return result && <Image src={result?.url} alt={result?.title} />;

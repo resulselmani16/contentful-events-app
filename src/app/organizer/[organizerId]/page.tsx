@@ -19,11 +19,7 @@ const OrganizerPage = () => {
   const organizerId = Array.isArray(params.organizerId)
     ? params.organizerId[0]
     : params.organizerId;
-  const {
-    data: organizer,
-    isLoading,
-    error,
-  } = useQuery({
+  const { data: organizer } = useQuery({
     queryKey: ["organizer", organizerId],
     queryFn: () => fetchOrganizerBio(organizerId || ""),
     enabled: !!organizerId,

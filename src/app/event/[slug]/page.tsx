@@ -21,11 +21,7 @@ const SingleEvent = () => {
   const params = useParams();
   const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
   console.log(slug);
-  const {
-    data: event,
-    isLoading,
-    error,
-  } = useQuery({
+  const { data: event, isLoading } = useQuery({
     queryKey: ["event", slug],
     queryFn: () => fetchSingleEvent(slug || ""),
     enabled: !!slug,
@@ -51,8 +47,9 @@ const SingleEvent = () => {
               variant={"default"}
               rel=""
               href={`/organizer/${event?.organizer?.organizerId}` || ""}
-              children={`${event?.organizer?.name} - ${event?.organizer?.email}`}
-            />
+            >
+              {`${event?.organizer?.name} - ${event?.organizer?.email}`}
+            </Link>
           </div>
         </div>
         <RichTextRenderer document={richTextDocument} />
